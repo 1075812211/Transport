@@ -111,7 +111,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void ALL_Start()
 {
-	int i;
 	HAL_Delay(10);
 
 	CCD_Init();
@@ -147,26 +146,7 @@ void ALL_Start()
   SPEEDMAX = 50 ;//设定直行车速
 	speed[0]=speed[1]=speed[2]=speed[3]=orspeed=SPEEDMAX;//*0.01078
 	
-	//bline是在黑色阈值，旧版灰度为高电平，CCD与灰度相反
-			i=0;
-				while(!is_line)//在出发区
-				{
-					HAL_Delay(10);
-					i++;
-					if(i>1400)
-						break; 
-				}
 
-				i=0;//等出第一条白线
-						while(is_line)
-						{
-							HAL_Delay(10);
-							i++;
-							if(i>50)
-							{
-								break; 
-							}
-						}
 }
 
 

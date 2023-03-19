@@ -14,7 +14,7 @@ extern uint16_t Direction;
 extern  uint16_t AddressX;
 extern  uint16_t AddressY;
 extern int x,y,daowei,turn_case;
-extern uint8_t map[7][9],mapbackup[7][9];
+extern uint8_t map[9][11],mapbackup[9][11];
 extern uint8_t way_x[],way_y[];
 extern int HUAN_pushed;
 
