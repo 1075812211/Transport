@@ -55,8 +55,9 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-Transport/Core
-Transport/Drivers
-Transport/MDK-ARM
-Transport/Middlewares
-Transport/USB_DEVICE
+/Core
+/Drivers
+/MDK-ARM
+/Middlewares
+/USB_DEVICE
+/.mxproject
