@@ -7,7 +7,7 @@
 #define HOU  3
 #define ZUO  4
 
-
+void position(void);
 void RUN(void);
 extern uint16_t SUM_HUAN;
 extern uint16_t Direction;

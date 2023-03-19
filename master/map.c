@@ -55,6 +55,72 @@ uint8_t mapbackup[7][9]={
 	//Y→//   行0     行1     行2     行3     行4     行5     行6     行7      行8
 	 };
 	 
+void position(void)
+{
+	int i;
+	if(!is_line)
+				{
+					adspeed[0]=adspeed[1]=0;
+					if(tr==1)
+					{
+						speed[0]=-0.5*orspeed;
+						speed[1]=orspeed;
+						speed[2]=-0.5*orspeed;
+						speed[3]=orspeed;	
+					}
+					else
+					{
+						speed[0]=orspeed;
+						speed[1]=-0.5*orspeed;
+						speed[2]=orspeed;
+						speed[3]=-0.5*orspeed;	
+					}
+				}
+				else
+				{
+					if(countline>0)
+					{
+						count++;
+
+						i=0;
+						while(is_line)
+						{
+							HAL_Delay(1);
+							i++;
+							if(i>300)
+							{
+								count--;
+								break; 
+							}
+						}
+						countline=0;
+					}
+					if(count>0)
+					{
+							switch(Direction)
+							{
+								case QIAN:
+									AddressY++;
+								break;
+								case HOU:
+									AddressY--;
+								break;
+								case ZUO:
+									AddressX--;
+								break;
+								case YOU:
+									AddressX++;
+								break;
+							}
+							count=0;
+					}
+
+					if(readline(0)>2000||readline(1)>2000)
+						tr=1;
+					else if(readline(2)>2000||readline(3)>2000)
+						tr=-1;
+				}
+}
 	 
 void RUN()
 {

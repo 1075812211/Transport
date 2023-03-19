@@ -2,6 +2,11 @@
 #include "main.h"
 
 /*
+//TIM1   电机输出PWM
+//TIM2-5 电机编码器
+//TIM9   两个舵机编码器
+//TIM10  10ms定时器中断
+//TIM11  20khz CCD时钟输出和步进电机控制中断
 后置光电GD_Value[0-3] A12 A15 B4 B5
 CCD信号 B8
 CCD读取ADC A4
@@ -19,6 +24,16 @@ DIR+ 方向 PC14
 ENA+ 使能 PC15
 
 
+main.c中
+#include "include.h"
+
+	ALL_Start();
+  while (1)
+  {
+		position();
+		RUN();
+  }
+	
 */
 
 
@@ -96,7 +111,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void ALL_Start()
 {
-	
+	int i;
 	HAL_Delay(10);
 
 	CCD_Init();
@@ -119,11 +134,39 @@ void ALL_Start()
 	Motor_PID_Init();//电机pid
 	pid_param_init(&Findline_PID,PID_POSITION,findlinepid,30,20,30,0.5,0,0,0);//巡线PID
 		
-	while(0);//io口用完，可以通过检测CCD值启动，刚开始用纸挡住
+	while(0);//启动命令，io口用完，可以通过检测CCD值启动，刚开始用纸挡住
 	
 	BJ_TO_CM(4);
 	TargetDuoJi[0]=ZhuaZi_HE;
 	TargetDuoJi[1]=ZhuaZi_SHENG;
+	
+	findline=1;
+
+	bline=0;//灰度或光电白线为低电平的情况，readline>bline即为在黑色区域
+	
+  SPEEDMAX = 50 ;//设定直行车速
+	speed[0]=speed[1]=speed[2]=speed[3]=orspeed=SPEEDMAX;//*0.01078
+	
+	//bline是在黑色阈值，旧版灰度为高电平，CCD与灰度相反
+			i=0;
+				while(!is_line)//在出发区
+				{
+					HAL_Delay(10);
+					i++;
+					if(i>1400)
+						break; 
+				}
+
+				i=0;//等出第一条白线
+						while(is_line)
+						{
+							HAL_Delay(10);
+							i++;
+							if(i>50)
+							{
+								break; 
+							}
+						}
 }
 
 
