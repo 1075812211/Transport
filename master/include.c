@@ -119,7 +119,6 @@ void ALL_Start()
 	Motor_Encoder_Init();
 	
 	HAL_TIM_Base_Start_IT(&htim10);
-	HAL_TIM_Base_Start_IT(&htim11);
 
 	BJ_TO_CM(2);
 	HAL_Delay(500);
